@@ -1,0 +1,10 @@
+<p>{{ blog.nickname }}</p><br/>
+<p>{{ blog.title }}</p><br/>
+<p>{{ blog.content }}</p><br/>
+
+<button type="button" onclick="location.href='/'">뒤로돌아가기</button><br/><br/>
+<button type="button" onclick="location.href='/blog/modify/{{blog._id}}'">수정하기</button><br/><br/>
+<button type="button" onclick="location.href='/blog/del/{{blog._id}}'">삭제하기</button> 
+
+<!-- <button type="button" onclick="location.href='blog/update'">수정하기</button><br/>
+<button type="button" onclick="location.href='del/{{ blog._id }}'">삭제하기</button>    -->

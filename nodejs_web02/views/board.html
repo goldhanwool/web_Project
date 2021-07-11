@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>게시판</title>
+</head>
+<style>
+    table {
+        width: 100%;
+        border: 1px solid #444444;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        border: 1px solid #444444;
+        padding: 10px;
+    }
+</style>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>작성시간</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in blogs %}
+            <tr>
+                <td>{{ data.title }}</td>
+                <td>{{ data.nickname }}</td>
+                <td><a href='/blog/find/{{data._id}}'>{{ data.content }}</a><br />
+                    <!-- <button type="button" onclick="location.href='blog/modify/{{data._id}}'">수정하기</button>
+                    <button type="button" onclick="location.href='blog/del/{{data._id}}'">삭제하기</button>  -->
+                </td>
+                <td>{{ data.createdAt }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br />
+    <!-- <button type="button" onclick="location.href='/blog/write'">글쓰기</button> -->
+<form>
+    <button type="button" onclick="location.href='/blog/write'">글쓰기</button>
+</form>
+
+<script>
+    // function write() {
+    //     alert('토큰입장')
+    //     if (localStorage.getItem("token")) {
+    //     $.ajax({
+
+    //       type: "GET",
+    //       url: "/write",
+    //       headers: {
+    //           Authorization : `Bearer${token}`, 
+    //       },
+    //       data: {
+    //       },
+    //       success: function (response) {
+    //         alert('성공')
+    //       },
+    //       error: function (error) {
+    //         alert('올바른형식이 아닙니다')
+    //       },
+    //     });//ajax
+    //     }else{
+    //         alert('err')
+    //     }
+    // }
+
+
+    // function sign_in() {
+    //     const token = JSON.parse(localStorage.getItem("token"));
+    //     $.ajax({
+    //       type: "GET",
+    //       url: "/write",
+    //       data: {
+    //         authorization = token,
+    //       },
+    //       success: function (response) {
+    //         window.location.replace("/blog/write");
+    //       },
+    //       error: function (error) {
+    //         alert('올바른형식이 아닙니다')
+    //       },
+    //     });
+    //   };
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+  <title>로그인</title>
+</head>
+
+<body>
+
+  <form action="/blog" method="post">
+    <p>제목</p>
+    <input id="title" style="width:200px; height:50px"></input><br/>
+    <p>내용</p>
+    <input id="content" style="width:500px; height:300px"></input><br/><br/>
+    <!-- <input id="nickname" style="width:500px; height:300px">{{ user.nickname }}</input><br/><br/> -->
+
+    <!-- <button type="submit">작성완료</button><br /><br /><br /> -->
+    <!-- <button type="button" onclick="location.href='/'">뒤로돌아가기</button><br/> -->
+    <button type="button" onclick="write_blog()">작성완료</button><br/>
+  </form>
+</body>
+<script>
+
+  function write_blog() {
+    if (localStorage.getItem("token")) {
+      let title = $("#title").val();
+      let content = $("#content").val();
+      $.ajax({
+        type: "POST",
+        url: "/blog",
+        data: {
+          title: title,
+          content: content,
+        },
+        success: function (response) {
+          window.location.replace("/blog");
+        },
+        error: function (error) {
+          alert('올바른형식이 아닙니다')
+        },
+      });//ajax
+    }else{
+      alert('로그인을 해야합니다')
+      window.location.replace("/");
+    }
+
+  }
+
+</script>
+
+</html>

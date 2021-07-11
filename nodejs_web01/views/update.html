@@ -1,0 +1,30 @@
+<!doctype html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>node</title>
+</head>
+<body>
+<form action = "/update/{{blog._id}}" method="post">
+    <p>제목</p>
+    <textarea name="title" style="width:200px; height:50px">{{ blog.title }}</textarea><br/>
+    <p>글쓴이</p>
+    <textarea name="author" style="width:200px; height:50px">{{ blog.author }}</textarea><br/>
+
+    <p>내용</p>
+    <textarea name="content" style="width:700px; height:300px">{{ blog.content }}</textarea><br/>
+
+    <p>비밀번호</p>
+
+    <textarea name="password" style="width:200px; height:50px"></textarea><br/><br/>
+
+    <button type = "submit" >수정완료</button>
+
+    <!-- <button type = "button" onclick="location.href='/blog/update/{{blog._id}}'" >수정완료</button> -->
+</form> 
+
+</body>
+</html>
+
+
+

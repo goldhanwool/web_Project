@@ -1,0 +1,50 @@
+<!doctype html>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>node</title>
+</head>
+<style>
+    table {
+    width: 100%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid #444444;
+    padding: 10px;
+  }
+</style>
+
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>내용</th>
+                <th>작성시간</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in blogs %}
+            <tr>
+                <td>{{ data.title }}</td> 
+                <td>{{ data.author }}</td>
+                <td><a href='/find/{{data._id}}'>{{ data.content }}</a><br/>
+                    <!-- <button type="button" onclick="location.href='blog/modify/{{data._id}}'">수정하기</button>
+                    <button type="button" onclick="location.href='blog/del/{{data._id}}'">삭제하기</button>  -->
+                </td>
+                <td>{{ data.createdAt }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<br/>
+<button type="button" onclick="location.href='/write'">글쓰기</button>
+
+</body>
+</html>
+
+
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>글쓰기</title>
+</head>
+
+<body>
+    <p>제목</p>
+    <input id="title" style="width:200px; height:50px"></input><br/>
+    <p>작성자</p>
+    <input id="content" style="width:200px; height:50px"></input><br/> 
+    <!-- <p>글내용</p>
+    <input id="{{blog" style="width:200px; height:50px"></input><br/>  -->
+    <button onclick ="write_blog()">작성완료</button><br/><br/><br/>
+    <!-- <button type="button" onclick="location.href='/'">뒤로돌아가기</button><br/> -->
+<script>
+
+function write_blog() {
+        let title = $("#title").val();
+        let content = $("#content").val();
+        $.ajax({
+          type: "POST",
+          url: "/blog",
+          data: {
+            title: title,
+            content: content,
+          },
+          success: function (response) {
+            window.location.replace("/blog");
+          },
+          error: function (error) {
+            alert('올바른형식이 아닙니다')
+          },
+        });
+      }
+</script>
+
+</body>
+</html>
+

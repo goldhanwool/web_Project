@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <title>로그인</title>
+</head>
+
+<style type="text/css">
+    * {
+        font-family: "Do Hyeon", sans-serif;
+    }
+
+    .modu {
+        text-align: center;
+    }
+
+    button {
+        background-color: #4CAF50;
+        width: 200px;
+        height: 50px;
+        margin-top: 30px;
+        border-radius: lightgrey 1px;
+    }
+</style>
+
+<body>
+    <div class="modu">
+        
+        <p>닉네임</p>
+        <input type="text" id="inputNickname" style="width:300px; height:20px" placeholder="nickname"><br/>
+        <p>이메일</p>
+        <input type="text" id="inputEmail" style="width:300px; height:20px" placeholder="email"><br/>
+        <p>비밀번호</p>
+        <input type="text" id="inputPassword1" style="width:300px; height:20px" placeholder="password1"><br/>
+        <p>비밀번호확인</p>
+        <input type="text" id="inputPassword2" style="width:300px; height:20px" placeholder="password confirm"><br/>
+        <button onclick="sign_up()">Register</button>
+    </div>
+</body>
+
+<script>
+
+    function sign_up() {
+        console.log("2");
+        const nickname = $("#inputNickname").val();
+        const email = $("#inputEmail").val();
+        const password1 = $("#inputPassword1").val();
+        const password2 = $("#inputPassword2").val();
+        $.ajax({
+            type: "POST",
+            url: "/user/register",
+            data: {
+                username: nickname,
+                email: email,
+                password: password1,
+                confirmPassword: password2,
+            },
+            success: function(msg) {
+                alert(msg);
+                window.location.replace("/user/login");
+            },
+            error: function(msg) {
+             alert(JSON.stringify(msg))
+            },
+        });
+    }
+
+
+</script>
+
+</html>

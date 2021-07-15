@@ -1,0 +1,149 @@
+<!doctype html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>node</title>
+</head>
+<style>
+    .custom_table {
+        font-family: Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    .custom_table td,
+    .custom_table th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .custom_table tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .custom_table tr:hover {
+        background-color: #ddd;
+    }
+
+    .custom_table th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    button {
+        margin-top: 50px;
+        margin-left: 150px;
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        font-size: 16px;
+        display: inline-block;
+
+    }
+</style>
+
+<body>
+    <table class="custom_table">
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>글내용</th>
+                <th>닉네임</th>
+                <th>작성일</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in blogs %}
+            <tr>
+                <td>{{ data.title }}</td>
+                <td><a href="blog/{{data._id}}">{{ data.content }}</a></td>
+                <td>{{ data.username }}</td>
+                <td>{{ data.createdAt }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button onclick="get_post()">글쓰기</button><br /><br /><br />
+    <br />
+    <ul id="write-box">
+    </ul>
+
+    <script>
+        function get_post() {
+            console.log('dlqwkd')
+            $.ajax({
+                type: "GET",
+                url: "/blog/write",
+                data: {},
+                headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        let usernick = JSON.stringify(response['username']);
+                        let username = usernick.replace(/\"/gi, ""); //ㄴstring에서 오는 ""를 모두 지우기 위해 
+                        alert(username);
+                        let temp_html = `
+                                            <p>작성자</p>                    
+                                            <textarea id="username">${username}</textarea>
+                                            <p>글 제목</p>
+                                            <input id="title" style="width:200px; height:50px"></input><br/>
+                                            <p>글 내용</p>
+                                            <input id="content" style="width:200px; height:50px"></input><br/>
+                                            <button onclick ="write_blog()">작성완료</button><br/>
+                                        `
+                        $('#write-box').append(temp_html)
+
+                    }
+                },
+                error: function (error) {
+                    alert('로그인 꼬')
+                    window.location.replace("/user/login");
+                }
+            })//ajax
+        }
+
+        function write_blog() {
+            console.log("입장");
+            let username = $("#username").val();
+            console.log(username)
+            let title = $("#title").val();
+            let content = $("#content").val();
+            console.log(title, content);
+            $.ajax({
+                type: "POST",
+                url: "/blog/write",
+                data: {
+                    username: username,
+                    title: title,
+                    content: content,
+                },
+                success: function (response) {
+                    if (response == 'success') {
+                        window.location.replace("/blog");
+                    }
+                },
+                error: function (error) {
+                    alert('올바른형식이 아닙니다')
+                },
+            });
+        }
+
+        // function get_username() {
+
+
+        // }
+
+    </script>
+    <html>

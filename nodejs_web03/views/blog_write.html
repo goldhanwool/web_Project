@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>글쓰기</title>
+</head>
+<style>
+button{
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+.wrap{
+     width: 50%;
+     height: 800px;
+     background-color: beige;
+     margin: 0 auto;
+}
+
+</style>
+<body>
+<div class="wrap">
+    <p>{{username}}</p>
+    <input id="title" style="width:200px; height:50px"></input><br/>
+    <p>작성자</p>
+    <input id="content" style="width:200px; height:50px"></input><br/>
+    <button onclick ="write_blog()">작성완료</button><br/>
+</div>    
+
+<script>
+
+function write_blog() {
+        console.log("입장");
+        let title = $("#title").val();
+        console.log(title);
+        let content = $("#content").val();
+        console.log(content);
+        $.ajax({
+          type: "POST",
+          url: "/blog/write",
+          data: {
+     
+            title: title,
+            content: content,
+          },
+          success: function (response) {
+            if(response == 'success'){
+            window.location.replace("/blog");}
+          },
+          error: function (error) {
+            alert('올바른형식이 아닙니다')
+          },
+        });
+      }
+</script>
+
+</body>
+</html>
+

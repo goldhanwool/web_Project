@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <title>Document</title>
+</head>
+<style>
+    button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
+    div {
+        border: 1px solid gray;
+        padding: 8px;
+    }
+
+    h1 {
+        text-align: center;
+        text-transform: uppercase;
+        color: #4CAF50;
+    }
+
+    p {
+        text-indent: 50px;
+        text-align: justify;
+        letter-spacing: 3px;
+    }
+
+    a {
+        text-decoration: none;
+        color: #008CBA;
+    }
+</style>
+
+<body>
+    <div>
+        <h1>{{ blogDetail.title }}</h1>
+        <p>{{ blogDetail.username }}</p>
+        <p>{{ blogDetail.content }}</p>
+        <br/>
+        <br/>
+    </div>
+    
+    <button type="button" onclick="modify()">수정하기</button>
+    <button type="button" onclick="del()">삭제하기</button><br /><br />
+    <button type="button" onclick="location.href='/'">뒤로돌아가기</button><br/><br/>
+    <input id="comment" style="width:200px; height:50px"></input><br/>
+    <button onclick ="write_comment()">작성완료</button><br/>
+
+    {{ comment.content }}
+
+
+</body>
+<script>
+    function write_comment() {
+        console.log("입장");
+        let content = $("#comment").val();
+        console.log(content);
+        $.ajax({
+          type: "POST",
+          url: "/blog/{{blog._id}}/comment",
+          data: {
+            content: content,
+          },
+          success: function (response) {
+            window.location.replace("/blog");
+          },
+          error: function (error) {
+            alert('올바른형식이 아닙니다')
+          },
+        });
+    }
+
+    function modify() {
+        console.log("수정입장");
+        $.ajax({
+            type: "GET",
+            url: "/blog/update/{{blog._id}}",
+            data: {},
+            headers: { authorization: `Bearer ${localStorage.getItem("token")}` },
+            success: function (response) {
+                if (response["result"] == "success"){
+                // window.location.replace("/blog");
+                update();}
+            },
+            error: function (error) {
+                alert('로그인 꼬')
+                window.location.replace("/blog/{{blog._id}}");
+            },
+        });
+    }
+
+    function update() {
+        console.log("삭제입장");
+        let content = $("#comment").val();
+        console.log(content);
+        $.ajax({
+          type: "POST",
+          url: "/blog/{{blog._id}}/comment",
+          data: {
+            content: content,
+          },
+          success: function (response) {
+            window.location.replace("/blog");
+          },
+          error: function (error) {
+            alert('올바른형식이 아닙니다')
+          },
+        });
+    }
+
+    function del() {
+        console.log("삭제입장");
+        let content = $("#comment").val();
+        console.log(content);
+        $.ajax({
+          type: "POST",
+          url: "/blog/{{blog._id}}/comment",
+          data: {
+            content: content,
+          },
+          success: function (response) {
+            window.location.replace("/blog");
+          },
+          error: function (error) {
+            alert('올바른형식이 아닙니다')
+          },
+        });
+      }
+
+
+</script>
+</html>
